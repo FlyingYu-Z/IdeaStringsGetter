@@ -8,12 +8,33 @@
     <depends>com.intellij.modules.platform</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <applicationService serviceImplementation="com.github.flyingyuz.ideastringsgetter.services.MyApplicationService"/>
-        <projectService serviceImplementation="com.github.flyingyuz.ideastringsgetter.services.MyProjectService"/>
+        <projectService serviceImplementation="cn.beingyi.idea.service.MyProjectService"/>
     </extensions>
 
     <applicationListeners>
-        <listener class="com.github.flyingyuz.ideastringsgetter.listeners.MyProjectManagerListener"
+        <listener class="cn.beingyi.idea.listeners.MyProjectManagerListener"
                   topic="com.intellij.openapi.project.ProjectManagerListener"/>
     </applicationListeners>
+
+    <projectListeners>
+        <listener class="cn.beingyi.idea.listeners.MyFocusChangeListener"
+                  topic="com.intellij.openapi.editor.ex.FocusChangeListener"/>
+    </projectListeners>
+
+    <actions>
+        <!-- Add your actions here -->
+        <action id="extra_string" class="cn.beingyi.idea.action.ExtraStringResourceAction" text="Extra string resource"
+                description="Extra string resource to strings.xml">
+            <add-to-group group-id="EditorPopupMenu" anchor="first"/>
+            <keyboard-shortcut keymap="$default" first-keystroke="alt ENTER"/>
+        </action>
+        <action id="test_id" class="cn.beingyi.idea.action.SwitchAction" text="Switch i18n" description="null description">
+            <add-to-group group-id="BuildMenu" anchor="last"/>
+        </action>
+        <action id="test_id2" class="cn.beingyi.idea.action.BuildI18nAction" text="Build i18n" description="null description">
+            <add-to-group group-id="BuildMenu" anchor="last"/>
+        </action>
+    </actions>
+
+
 </idea-plugin>
