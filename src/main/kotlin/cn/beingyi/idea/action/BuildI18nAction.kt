@@ -4,6 +4,9 @@ import cn.beingyi.idea.manager.ProjectSwitchManager
 import cn.beingyi.idea.model.LanguageFile
 import cn.beingyi.idea.model.ProjectInfo
 import com.google.common.collect.Lists
+import com.google.wireless.android.sdk.stats.AndroidProfilerDbStats
+import com.intellij.codeInsight.daemon.DaemonCodeAnalyzer
+import com.intellij.execution.configurations.RunConfiguration
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.application.ApplicationManager
@@ -41,10 +44,10 @@ class BuildI18nAction : AnAction() {
                     createObject(projectInfo,langFile)
                 }
 
+                DaemonCodeAnalyzer.getInstance(project).restart()
             }
         }
         VirtualFileManager.getInstance().findFileByNioPath(projectInfo?.generatedDir?.toPath()!!)?.refresh(false,true)
-
 
 
     }
@@ -83,6 +86,8 @@ class BuildI18nAction : AnAction() {
             .addType(stringsInterface)
             .build()
         stringFile.writeTo(projectInfo.generatedDir)
+
+
     }
 
     fun createObject(projectInfo: ProjectInfo, langFile: LanguageFile) {
